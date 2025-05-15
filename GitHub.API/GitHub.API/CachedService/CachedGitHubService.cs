@@ -35,22 +35,10 @@ namespace GitHub.API.CachedService
 
             cachedPortfolio = await _gitHubService.GetPortfolioAsync();
 
-            var cacheOptions = new MemoryCacheEntryOptions()
-                .SetAbsoluteExpiration(TimeSpan.FromMinutes(10)) // או כל זמן שתבחרי
-                .SetSlidingExpiration(TimeSpan.FromMinutes(5));
-
-            _memoryCache.Set(UserPortfolioKey, cachedPortfolio, cacheOptions);
-            _memoryCache.Set(LastEventKey, latestEventDate ?? DateTimeOffset.UtcNow, cacheOptions);
+            _memoryCache.Set(UserPortfolioKey, cachedPortfolio);
+            _memoryCache.Set(LastEventKey, latestEventDate ?? DateTimeOffset.UtcNow);
 
 
-            if (_memoryCache.TryGetValue(UserPortfolioKey, out  cachedPortfolio))
-            {
-                Console.WriteLine($"Portfolio found in cache: {cachedPortfolio.Count} items");
-            }
-            else
-            {
-                Console.WriteLine("Portfolio not found in cache.");
-            }
 
             return cachedPortfolio;
 
