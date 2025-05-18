@@ -23,7 +23,7 @@ namespace GitHub.API.Controllers
         [HttpGet("portfolio")]
         public async Task<ActionResult<List<Portfolio>>> Get()
         {
-            return await _gitHubService.GetPortfolioAsync();
+            return Ok(await _gitHubService.GetPortfolioAsync());
 
         }
 
